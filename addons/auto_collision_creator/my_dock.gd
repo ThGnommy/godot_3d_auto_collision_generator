@@ -52,8 +52,9 @@ func save_scene(node, root) -> void:
 	var packed_scene = PackedScene.new()
 	packed_scene.pack(node)
 	
-	ResourceSaver.save(packed_scene, "res://prova/", ResourceSaver.FLAG_RELATIVE_PATHS)
-	print(ResourceSaver.get_recognized_extensions(packed_scene))
+	var folder = $VBoxContainer/DirectoryName.text + node.name + ".tscn"
+	
+	ResourceSaver.save(packed_scene, folder, ResourceSaver.FLAG_RELATIVE_PATHS)
 	
 func _on_button_pressed() -> void:
 	var editor_selection = editor_interface.get_selection()
@@ -82,3 +83,7 @@ func _on_simplified_checkbox_toggled(button_pressed: bool) -> void:
 	else:
 		convex_collision_simplified = false
 		$VBoxContainer/SimplifiedCheckbox.text = "Single"
+
+func _on_select_directory_pressed() -> void:
+	var selected_directory: String = editor_interface.get_current_directory()
+	$VBoxContainer/DirectoryName.text = selected_directory

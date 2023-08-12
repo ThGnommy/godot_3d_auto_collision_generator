@@ -16,4 +16,4 @@ mono_crash.*.json
 
 #3D
 
-.glb
+*.glb
