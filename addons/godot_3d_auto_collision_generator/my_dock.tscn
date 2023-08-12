@@ -1,0 +1,68 @@
+[gd_scene load_steps=3 format=3 uid="uid://cskb6en7suhat"]
+
+[ext_resource type="Script" path="res://addons/godot_3d_auto_collision_generator/my_dock.gd" id="1_kye4u"]
+[ext_resource type="Script" path="res://addons/godot_3d_auto_collision_generator/directory_tree.gd" id="2_ixkoi"]
+
+[node name="Auto Collision Generator" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kye4u")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SelectText" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Select a directory to save the objects"
+
+[node name="DirectoryTree" type="Tree" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(2.08165e-12, 200)
+layout_mode = 2
+tooltip_text = "asasdads"
+hide_root = true
+script = ExtResource("2_ixkoi")
+
+[node name="RefreshDirectories" type="Button" parent="VBoxContainer"]
+layout_direction = 3
+layout_mode = 2
+text = "Refresh"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 25)
+layout_mode = 2
+
+[node name="CollisionTypeText" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Choose a collision type"
+
+[node name="ItemList" type="ItemList" parent="VBoxContainer"]
+layout_mode = 2
+allow_reselect = true
+auto_height = true
+item_count = 2
+item_0/text = "Create Convex Collision"
+item_1/text = "Create Trimesh Collision"
+
+[node name="SimplifiedSwitch" type="CheckButton" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Single"
+
+[node name="CreateAndSave" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Create collision & Save"
+
+[connection signal="pressed" from="VBoxContainer/RefreshDirectories" to="VBoxContainer/DirectoryTree" method="_on_refresh_directories_pressed"]
+[connection signal="item_selected" from="VBoxContainer/ItemList" to="." method="_on_item_list_item_selected"]
+[connection signal="toggled" from="VBoxContainer/SimplifiedSwitch" to="." method="_on_simplified_checkbox_toggled"]
+[connection signal="pressed" from="VBoxContainer/CreateAndSave" to="." method="_on_create_and_save_pressed"]
