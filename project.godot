@@ -11,8 +11,11 @@ config_version=5
 [application]
 
 config/name="AutoCreateCollision_Plugin"
-config/features=PackedStringArray("4.0", "Forward Plus")
-config/icon="res://icon.svg"
+config/features=PackedStringArray("4.1", "Forward Plus")
+
+[dotnet]
+
+project/assembly_name="AutoCreateCollision_Plugin"
 
 [editor_plugins]
 

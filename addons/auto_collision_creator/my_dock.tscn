@@ -6,7 +6,7 @@
 font_size = 30
 font_color = Color(0, 0.6, 0.247059, 1)
 
-[node name="MyDock" type="Control"]
+[node name="Auto Collision Creator" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -56,12 +56,13 @@ item_2/text = "Create Trimesh Collision"
 [node name="SimplifiedCheckbox" type="CheckButton" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
+text = "Single"
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="CreateAndSave" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Create collision & Save"
 
 [connection signal="pressed" from="VBoxContainer/SelectDirectory" to="." method="_on_select_directory_pressed"]
 [connection signal="item_selected" from="VBoxContainer/ItemList" to="." method="_on_item_list_item_selected"]
 [connection signal="toggled" from="VBoxContainer/SimplifiedCheckbox" to="." method="_on_simplified_checkbox_toggled"]
-[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/CreateAndSave" to="." method="_on_create_and_save_pressed"]
