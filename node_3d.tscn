@@ -1,9 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbdgifx8ruk6t"]
+[gd_scene load_steps=4 format=3 uid="uid://cbdgifx8ruk6t"]
 
 [ext_resource type="ArrayMesh" uid="uid://l81tqx0w2057" path="res://shelf_B_small_decorated.obj" id="1_w811f"]
+[ext_resource type="PackedScene" uid="uid://mgm7su2bwh1l" path="res://bed_single_A.fbx" id="2_xqu8t"]
+[ext_resource type="PackedScene" uid="uid://jjwsmhn7mcst" path="res://table_medium.gltf" id="3_alwam"]
 
 [node name="Node3D" type="Node3D"]
 
-[node name="ShelfBSmallDecorated" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.03417, 2.38419e-07, 0.0658854)
+[node name="OBJ" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.50643, 0, -0.845875)
 mesh = ExtResource("1_w811f")
+
+[node name="FBX" parent="." instance=ExtResource("2_xqu8t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.93676, 0, -1.70751)
+
+[node name="GLTF" parent="." instance=ExtResource("3_alwam")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0891242, 0, 4.88556)
+
+[editable path="FBX"]

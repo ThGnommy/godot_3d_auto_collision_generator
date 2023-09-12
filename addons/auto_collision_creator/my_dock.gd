@@ -60,9 +60,9 @@ func _on_create_and_save_pressed() -> void:
 		return
 
 	for node in selected_nodes:
-		#handle_gltf_file_format(node)
+		handle_gltf_file_format(node)
 		handle_obj_file_format(node)
-		#handle_fbx_file_format(node)
+		handle_fbx_file_format(node)
 
 func _on_simplified_checkbox_toggled(button_pressed: bool) -> void:
 	if button_pressed == true:
@@ -76,19 +76,18 @@ func _on_select_directory_pressed() -> void:
 	var selected_directory: String = editor_interface.get_current_directory()
 	$VBoxContainer/DirectoryName.text = selected_directory
 
-func handle_obj_file_format(mesh: MeshInstance3D) -> void:
-	var parent = mesh.get_tree().get_edited_scene_root()
+func handle_obj_file_format(node: Node3D) -> void:
+	var parent = node.get_tree().get_edited_scene_root()
 	
-	if mesh.get_child_count() == 0:
-		create_selected_collision(mesh)
+	if node.get_child_count() == 0:
+		create_selected_collision(node)
+		var static_body = node.get_child(0)
+		ACC_Utility.recursive_set_owner(static_body, node, parent)
 		
-		var static_body = mesh.get_child(0)
+		# Reset position
+		node.position = Vector3.ZERO
 		
-		ACC_Utility.recursive_set_owner(static_body, mesh, parent)
-		
-		save_scene(mesh, parent)
-
-	else: return
+		save_scene(node, parent)
 
 func handle_gltf_file_format(node: Node3D) -> void:
 	if node.get_child_count(true) > 0 and node.get_child(0).get_child_count() == 0:
@@ -101,6 +100,9 @@ func handle_gltf_file_format(node: Node3D) -> void:
 				child.queue_free()
 		
 		create_selected_collision(mesh)
+		
+		# Reset position
+		node.position = Vector3.ZERO
 
 		save_scene(node, parent)
 
@@ -109,11 +111,15 @@ func handle_fbx_file_format(node: Node3D) -> void:
 	
 	if node.get_child(0).get_child_count() > 0:
 		parent.set_editable_instance(node, true);
-		var mesh: MeshInstance3D = node.get_child(0).get_child(0)
+		var mesh = node.get_child(0).get_child(0)
 		# Delete previous childs
 		if mesh.get_child_count() > 0:
 			for child in mesh.get_children():
 				child.queue_free()
 		
 		create_selected_collision(mesh)
+		
+		# Reset position
+		node.position = Vector3.ZERO
+		
 		save_scene(node, parent)
