@@ -1,3 +1,9 @@
-[gd_scene format=3 uid="uid://cbdgifx8ruk6t"]
+[gd_scene load_steps=2 format=3 uid="uid://cbdgifx8ruk6t"]
+
+[ext_resource type="ArrayMesh" uid="uid://l81tqx0w2057" path="res://shelf_B_small_decorated.obj" id="1_w811f"]
 
 [node name="Node3D" type="Node3D"]
+
+[node name="ShelfBSmallDecorated" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.03417, 2.38419e-07, 0.0658854)
+mesh = ExtResource("1_w811f")

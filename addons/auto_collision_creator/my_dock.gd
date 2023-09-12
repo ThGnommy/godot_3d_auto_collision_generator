@@ -1,10 +1,6 @@
 @tool
 extends Control
 
-# 1. Make children editable
-# 2. Choose a collision type
-# 	- Add the collision
-
 enum CollisionType {
 	Convex,
 	Multiple,
@@ -43,7 +39,6 @@ func create_selected_collision(mesh: MeshInstance3D) -> void:
 		_:
 			printerr("Error: Something goes wrong.")
 
-
 func save_scene(node, root) -> void:
 	# Make the instance owner of itself
 	node.scene_file_path = ""
@@ -65,9 +60,9 @@ func _on_create_and_save_pressed() -> void:
 		return
 
 	for node in selected_nodes:
-		handle_gltf_file_format(node)
+		#handle_gltf_file_format(node)
 		handle_obj_file_format(node)
-		handle_fbx_file_format(node)
+		#handle_fbx_file_format(node)
 
 func _on_simplified_checkbox_toggled(button_pressed: bool) -> void:
 	if button_pressed == true:
@@ -81,32 +76,24 @@ func _on_select_directory_pressed() -> void:
 	var selected_directory: String = editor_interface.get_current_directory()
 	$VBoxContainer/DirectoryName.text = selected_directory
 
-func handle_obj_file_format(node: Node3D) -> void:
-	var parent = node.get_tree().get_edited_scene_root()
+func handle_obj_file_format(mesh: MeshInstance3D) -> void:
+	var parent = mesh.get_tree().get_edited_scene_root()
 	
-	if node.get_child_count() == 0:
-		# creating the new parent node
-		var new_node = Node3D.new()
-		new_node.name = node.name + "_parent"
-		parent.add_child(new_node)
-		new_node.set_owner(parent)
+	if mesh.get_child_count() == 0:
+		create_selected_collision(mesh)
+		
+		var static_body = mesh.get_child(0)
+		
+		ACC_Utility.recursive_set_owner(static_body, mesh, parent)
+		
+		save_scene(mesh, parent)
 
-		# reparent
-		node.reparent(new_node)
-		new_node.add_child(node)
-		node.set_owner(new_node)
-		
-		#if node.get_child_count() == 0 and node is MeshInstance3D:
-		#create_selected_collision(node_parent)
-		#save_scene(node_parent, parent)
-		
 	else: return
 
 func handle_gltf_file_format(node: Node3D) -> void:
-	var parent = node.get_tree().get_edited_scene_root()
-	parent.set_editable_instance(node, true);
-	
-	if node.get_child_count() == 1 and node.get_child(0).get_child_count() == 0:
+	if node.get_child_count(true) > 0 and node.get_child(0).get_child_count() == 0:
+		var parent = node.get_tree().get_edited_scene_root()
+		parent.set_editable_instance(node, true);
 		var mesh: MeshInstance3D = node.get_child(0)
 		# Delete previous childs
 		if mesh.get_child_count() > 0:
