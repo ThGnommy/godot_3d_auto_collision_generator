@@ -1,10 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cskb6en7suhat"]
 
 [ext_resource type="Script" path="res://addons/auto_collision_creator/my_dock.gd" id="1_kye4u"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_n0fjd"]
-font_size = 30
-font_color = Color(0, 0.6, 0.247059, 1)
+[ext_resource type="Script" path="res://addons/auto_collision_creator/directory_tree.gd" id="2_ixkoi"]
 
 [node name="Auto Collision Creator" type="Control"]
 layout_mode = 3
@@ -25,19 +22,19 @@ grow_vertical = 2
 
 [node name="Directory" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "1. Select a directory"
+text = "Select a directory"
 
-[node name="SelectDirectory" type="Button" parent="VBoxContainer"]
+[node name="Tree" type="Tree" parent="VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 200)
 layout_mode = 2
-text = "Select Save Directory"
+script = ExtResource("2_ixkoi")
 
-[node name="DirectoryName" type="Label" parent="VBoxContainer"]
+[node name="Button" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "res://"
-label_settings = SubResource("LabelSettings_n0fjd")
+text = "Refresh directories"
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
-custom_minimum_size = Vector2(2.08165e-12, 50)
+custom_minimum_size = Vector2(2.08165e-12, 25)
 layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer"]
@@ -50,7 +47,7 @@ allow_reselect = true
 auto_height = true
 item_count = 3
 item_0/text = "Create Convex Collision"
-item_1/text = "Create Multiple Convex_collisions"
+item_1/text = "Create Multiple Convex Collisions"
 item_2/text = "Create Trimesh Collision"
 
 [node name="SimplifiedCheckbox" type="CheckButton" parent="VBoxContainer"]
@@ -62,7 +59,7 @@ text = "Single"
 layout_mode = 2
 text = "Create collision & Save"
 
-[connection signal="pressed" from="VBoxContainer/SelectDirectory" to="." method="_on_select_directory_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button" to="VBoxContainer/Tree" method="_on_button_pressed"]
 [connection signal="item_selected" from="VBoxContainer/ItemList" to="." method="_on_item_list_item_selected"]
 [connection signal="toggled" from="VBoxContainer/SimplifiedCheckbox" to="." method="_on_simplified_checkbox_toggled"]
 [connection signal="pressed" from="VBoxContainer/CreateAndSave" to="." method="_on_create_and_save_pressed"]

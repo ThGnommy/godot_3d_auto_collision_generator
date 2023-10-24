@@ -7,11 +7,20 @@ enum CollisionType {
 	Trimesh
 }
 
+enum FormatType {
+	GLTF,
+	FBX,
+	OBJ
+}
+
 var editor_interface
 
 var default_collision: CollisionType = CollisionType.Convex
+var default_format_type: FormatType = FormatType.GLTF
 
 var convex_collision_simplified: bool = false
+
+var root_path: String = "res://"
 
 func _ready() -> void:
 	$VBoxContainer/ItemList.select(0)
@@ -51,6 +60,17 @@ func save_scene(node, root) -> void:
 	
 	ResourceSaver.save(packed_scene, folder, ResourceSaver.FLAG_RELATIVE_PATHS)
 
+func select_format_type_to_handle(node) -> void:
+	match(default_format_type):
+		FormatType.GLTF:
+			handle_gltf_file_format(node)
+		FormatType.FBX:
+			handle_fbx_file_format(node)
+		FormatType.OBJ:
+			handle_obj_file_format(node)
+		_:
+			printerr("Error: Something goes wrong.")
+
 func _on_create_and_save_pressed() -> void:
 	var editor_selection = editor_interface.get_selection()
 	var selected_nodes = editor_selection.get_selected_nodes()
@@ -60,9 +80,15 @@ func _on_create_and_save_pressed() -> void:
 		return
 
 	for node in selected_nodes:
-		handle_gltf_file_format(node)
-		handle_obj_file_format(node)
-		handle_fbx_file_format(node)
+		if node.get_child_count() > 0 and node.get_child(0) is MeshInstance3D:
+			default_format_type = FormatType.GLTF
+			select_format_type_to_handle(node)
+		elif node.get_child_count() > 0 and node.get_child(0) is Node3D:
+			default_format_type = FormatType.FBX
+			select_format_type_to_handle(node)
+		elif node.get_child_count() == 0:
+			default_format_type = FormatType.OBJ
+			select_format_type_to_handle(node)
 
 func _on_simplified_checkbox_toggled(button_pressed: bool) -> void:
 	if button_pressed == true:
@@ -77,49 +103,51 @@ func _on_select_directory_pressed() -> void:
 	$VBoxContainer/DirectoryName.text = selected_directory
 
 func handle_obj_file_format(node: Node3D) -> void:
+	print("is obj")
 	var parent = node.get_tree().get_edited_scene_root()
+	create_selected_collision(node)
+	var static_body = node.get_child(0)
+	ACC_Utility.recursive_set_owner(static_body, node, parent)
 	
-	if node.get_child_count() == 0:
-		create_selected_collision(node)
-		var static_body = node.get_child(0)
-		ACC_Utility.recursive_set_owner(static_body, node, parent)
-		
-		# Reset position
-		node.position = Vector3.ZERO
-		
-		save_scene(node, parent)
+	# Reset position
+	node.position = Vector3.ZERO
+	
+	save_scene(node, parent)
 
 func handle_gltf_file_format(node: Node3D) -> void:
-	if node.get_child_count(true) > 0 and node.get_child(0).get_child_count() == 0:
-		var parent = node.get_tree().get_edited_scene_root()
-		parent.set_editable_instance(node, true);
-		var mesh: MeshInstance3D = node.get_child(0)
-		# Delete previous childs
-		if mesh.get_child_count() > 0:
-			for child in mesh.get_children():
-				child.queue_free()
-		
-		create_selected_collision(mesh)
-		
-		# Reset position
-		node.position = Vector3.ZERO
+	print("is gltf ", node.get_child(0).get_class())
+	
+	var parent = node.get_tree().get_edited_scene_root()
+	parent.set_editable_instance(node, true);
+	var mesh: MeshInstance3D = node.get_child(0)
+	# Delete previous childs
+	if mesh.get_child_count() > 0:
+		for child in mesh.get_children():
+			child.queue_free()
+	
+	create_selected_collision(mesh)
+	
+	# Reset position
+	node.position = Vector3.ZERO
 
-		save_scene(node, parent)
+	save_scene(node, parent)
 
 func handle_fbx_file_format(node: Node3D) -> void:
+	print("is fbx ", node.get_child(0).get_class())
 	var parent = node.get_tree().get_edited_scene_root()
+	parent.set_editable_instance(node, true);
 	
-	if node.get_child(0).get_child_count() > 0:
-		parent.set_editable_instance(node, true);
-		var mesh = node.get_child(0).get_child(0)
-		# Delete previous childs
-		if mesh.get_child_count() > 0:
-			for child in mesh.get_children():
-				child.queue_free()
-		
-		create_selected_collision(mesh)
-		
-		# Reset position
-		node.position = Vector3.ZERO
-		
-		save_scene(node, parent)
+	var root_node = node.get_child(0)
+	var child_mesh = root_node.get_child(0)
+	
+	child_mesh.reparent(node)
+	child_mesh.set_owner(node)
+	
+	node.remove_child(root_node)
+	root_node.queue_free()
+	
+	create_selected_collision(child_mesh)
+	
+	# Reset position
+	node.position = Vector3.ZERO
+	save_scene(node, parent)
