@@ -3,9 +3,8 @@ extends Tree
 
 var root_path: String = "res://"
 
-var editor_interface
+var selected_text
 
-	
 func _ready() -> void:
 	create_directory_tree()
 
@@ -21,7 +20,6 @@ func create_directory_tree() -> void:
 	set_directories(root_path, root)
 
 func set_directories(path: String, root_tree: TreeItem) -> void:
-	var directories = []
 	var dir = DirAccess.open(path)
  
 	if dir:
@@ -49,12 +47,5 @@ func set_directories(path: String, root_tree: TreeItem) -> void:
   
 		dir.list_dir_end()
 
-func _process(delta: float) -> void:
-	pass
-	
-func _on_filesystem_changed() -> void:
-	print_debug("file system changed")
-
-
-func _on_button_pressed() -> void:
+func _on_refresh_directories_pressed() -> void:
 	create_directory_tree()

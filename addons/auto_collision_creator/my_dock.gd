@@ -20,8 +20,6 @@ var default_format_type: FormatType = FormatType.GLTF
 
 var convex_collision_simplified: bool = false
 
-var root_path: String = "res://"
-
 func _ready() -> void:
 	$VBoxContainer/ItemList.select(0)
 	$VBoxContainer/SimplifiedCheckbox.text = "Single"
@@ -56,7 +54,15 @@ func save_scene(node, root) -> void:
 	var packed_scene = PackedScene.new()
 	packed_scene.pack(node)
 	
-	var folder = $VBoxContainer/DirectoryName.text + node.name + ".tscn"
+	var dirname = %DirectoryTree.get_selected().get_text(0) + "/"
+	
+	var base_dir = DirAccess.open("res://")
+	var folder_exist = base_dir.dir_exists(dirname)
+	
+	if !folder_exist:
+		printerr("Error: " + dirname + " does not exist. Refresh the directory list.")
+	
+	var folder = dirname + node.name + ".tscn"
 	
 	ResourceSaver.save(packed_scene, folder, ResourceSaver.FLAG_RELATIVE_PATHS)
 
@@ -98,12 +104,7 @@ func _on_simplified_checkbox_toggled(button_pressed: bool) -> void:
 		convex_collision_simplified = false
 		$VBoxContainer/SimplifiedCheckbox.text = "Single"
 
-func _on_select_directory_pressed() -> void:
-	var selected_directory: String = editor_interface.get_current_directory()
-	$VBoxContainer/DirectoryName.text = selected_directory
-
 func handle_obj_file_format(node: Node3D) -> void:
-	print("is obj")
 	var parent = node.get_tree().get_edited_scene_root()
 	create_selected_collision(node)
 	var static_body = node.get_child(0)
@@ -115,8 +116,6 @@ func handle_obj_file_format(node: Node3D) -> void:
 	save_scene(node, parent)
 
 func handle_gltf_file_format(node: Node3D) -> void:
-	print("is gltf ", node.get_child(0).get_class())
-	
 	var parent = node.get_tree().get_edited_scene_root()
 	parent.set_editable_instance(node, true);
 	var mesh: MeshInstance3D = node.get_child(0)
@@ -133,7 +132,6 @@ func handle_gltf_file_format(node: Node3D) -> void:
 	save_scene(node, parent)
 
 func handle_fbx_file_format(node: Node3D) -> void:
-	print("is fbx ", node.get_child(0).get_class())
 	var parent = node.get_tree().get_edited_scene_root()
 	parent.set_editable_instance(node, true);
 	

@@ -20,26 +20,30 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Directory" type="Label" parent="VBoxContainer"]
+[node name="SelectText" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Select a directory"
+text = "Select a directory to save the objects"
 
-[node name="Tree" type="Tree" parent="VBoxContainer"]
+[node name="DirectoryTree" type="Tree" parent="VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(2.08165e-12, 200)
 layout_mode = 2
+tooltip_text = "asasdads"
+hide_root = true
 script = ExtResource("2_ixkoi")
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="RefreshDirectories" type="Button" parent="VBoxContainer"]
+layout_direction = 3
 layout_mode = 2
-text = "Refresh directories"
+text = "Refresh"
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 custom_minimum_size = Vector2(2.08165e-12, 25)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="CollisionTypeText" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "2. Choose a collision type"
+text = "Choose a collision type"
 
 [node name="ItemList" type="ItemList" parent="VBoxContainer"]
 layout_mode = 2
@@ -59,7 +63,7 @@ text = "Single"
 layout_mode = 2
 text = "Create collision & Save"
 
-[connection signal="pressed" from="VBoxContainer/Button" to="VBoxContainer/Tree" method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/RefreshDirectories" to="VBoxContainer/DirectoryTree" method="_on_refresh_directories_pressed"]
 [connection signal="item_selected" from="VBoxContainer/ItemList" to="." method="_on_item_list_item_selected"]
 [connection signal="toggled" from="VBoxContainer/SimplifiedCheckbox" to="." method="_on_simplified_checkbox_toggled"]
 [connection signal="pressed" from="VBoxContainer/CreateAndSave" to="." method="_on_create_and_save_pressed"]
