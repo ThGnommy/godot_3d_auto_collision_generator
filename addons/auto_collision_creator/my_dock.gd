@@ -19,6 +19,7 @@ var default_collision: CollisionType = CollisionType.Convex
 var default_format_type: FormatType = FormatType.GLTF
 
 var convex_collision_simplified: bool = false
+var multiple_convex_collisions_custom_settings: bool = false
 
 func _ready() -> void:
 	$VBoxContainer/ItemList.select(0)
@@ -27,13 +28,23 @@ func _ready() -> void:
 func _on_item_list_item_selected(index: int) -> void:
 	if index == 0:
 		default_collision = CollisionType.Convex
-		$VBoxContainer/SimplifiedCheckbox.show()
 	elif index == 1:
 		default_collision = CollisionType.Multiple
-		$VBoxContainer/SimplifiedCheckbox.hide()
 	elif index == 2:
 		default_collision = CollisionType.Trimesh
-		$VBoxContainer/SimplifiedCheckbox.hide()
+
+	# Handle SimplifiedSwitch
+	if index == 0:
+		$VBoxContainer/SimplifiedSwitch.show()
+	else:
+		$VBoxContainer/SimplifiedSwitch.hide()
+		
+	# Handle MultipleConvexCollisionsSettingsSwitch
+	if index == 1:
+		$VBoxContainer/MultipleConvexCollisionsSettingsSwitch.show()
+	else:
+		$VBoxContainer/MultipleConvexCollisionsSettingsSwitch.hide()
+
 
 func create_selected_collision(mesh: MeshInstance3D) -> void:
 	match(default_collision):
@@ -149,3 +160,7 @@ func handle_fbx_file_format(node: Node3D) -> void:
 	# Reset position
 	node.position = Vector3.ZERO
 	save_scene(node, parent)
+
+
+func _on_multiple_convex_collisions_settings_switch_toggled(button_pressed):
+	pass # Replace with function body.
