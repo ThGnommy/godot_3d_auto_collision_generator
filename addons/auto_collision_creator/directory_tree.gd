@@ -27,12 +27,12 @@ func set_directories(path: String, root_tree: TreeItem) -> void:
 		while true:
 			var file = dir.get_next()
 			
-			if file.contains("addons"):
-				continue
-			
 			if file == "":
 				break
-			if dir.current_is_dir():
+			# Ignore addons and hidden folders
+			elif file.contains("addons") or file.begins_with("."):
+				continue
+			elif dir.current_is_dir():
 				
 				var sub_path: String
 				
