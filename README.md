@@ -9,7 +9,7 @@ This plugin will save you time.
 Create the collision for multiple 3D objects in one click.
 
 ### Demo
-https://github.com/ThGnommy/AutoCreateCollision_GodotPlugin/assets/29650993/208fe184-1c60-4d08-8b5c-4ab1085b9879
+https://github.com/ThGnommy/godot_3d_auto_collision_generator/assets/29650993/a545c2f9-76f2-45a1-a7df-75f17ce4446a
 
 ### Supported 3D file formats
 - [x] .gltf
