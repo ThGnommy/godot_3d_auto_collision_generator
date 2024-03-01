@@ -29,6 +29,7 @@ func set_directories(path: String, root_tree: TreeItem) -> void:
 			
 			if file == "":
 				break
+			
 			# Ignore addons and hidden folders
 			elif file.contains("addons") or file.begins_with("."):
 				continue

@@ -31,7 +31,7 @@ func _on_item_list_item_selected(index: int) -> void:
 	elif index == 1:
 		default_collision = CollisionType.Trimesh
 
-	# Handle SimplifiedSwitch
+	# Show SimplifiedSwitch only if Create Convex Collision is selected
 	if index == 0:
 		$VBoxContainer/SimplifiedSwitch.show()
 	else:
@@ -87,6 +87,7 @@ func _on_create_and_save_pressed() -> void:
 		printerr("You should select an object.")
 		return
 
+	# Each file type has to be handled differently
 	for node in selected_nodes:
 		if node.get_child_count() > 0 and node.get_child(0) is MeshInstance3D:
 			default_format_type = FormatType.GLTF
@@ -151,7 +152,3 @@ func handle_fbx_file_format(node: Node3D) -> void:
 	# Reset position
 	node.position = Vector3.ZERO
 	save_scene(node, parent)
-
-
-func _on_multiple_convex_collisions_settings_switch_toggled(button_pressed):
-	pass # Replace with function body.
