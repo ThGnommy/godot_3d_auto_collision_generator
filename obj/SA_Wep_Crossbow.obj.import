@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://3p62hjr4u44v"
+path="res://.godot/imported/SA_Wep_Crossbow.obj-074a0af8ed08fe3d7087a69106aa7197.mesh"
+
+[deps]
+
+files=["res://.godot/imported/SA_Wep_Crossbow.obj-074a0af8ed08fe3d7087a69106aa7197.mesh"]
+
+source_file="res://obj/SA_Wep_Crossbow.obj"
+dest_files=["res://.godot/imported/SA_Wep_Crossbow.obj-074a0af8ed08fe3d7087a69106aa7197.mesh", "res://.godot/imported/SA_Wep_Crossbow.obj-074a0af8ed08fe3d7087a69106aa7197.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

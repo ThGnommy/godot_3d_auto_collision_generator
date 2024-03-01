@@ -1,6 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://djxtpc61uuqks"]
+[gd_scene load_steps=3 format=3 uid="uid://djxtpc61uuqks"]
 
 [ext_resource type="Script" path="res://addons/auto_collision_creator/multiple_convex_collisions_settings.gd" id="1_v43ex"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y23vo"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+draw_center = false
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_blend = true
 
 [node name="MultipleConvexCollisionsSettings" type="Control"]
 layout_mode = 3
@@ -10,3 +22,111 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_v43ex")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y23vo")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+show_behind_parent = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="convex_hull_approximation" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/convex_hull_approximation"]
+layout_mode = 2
+text = "convex_hull_approximation"
+
+[node name="CheckButton" type="CheckButton" parent="ScrollContainer/VBoxContainer/convex_hull_approximation"]
+layout_mode = 2
+button_pressed = true
+
+[node name="convex_hull_downsampling" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/convex_hull_downsampling"]
+layout_mode = 2
+text = "convex_hull_downsampling
+"
+
+[node name="SpinBox" type="SpinBox" parent="ScrollContainer/VBoxContainer/convex_hull_downsampling"]
+layout_mode = 2
+min_value = 1.0
+max_value = 16.0
+value = 4.0
+
+[node name="max_concavity" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/max_concavity"]
+layout_mode = 2
+text = "max_concavity"
+
+[node name="SpinBox" type="SpinBox" parent="ScrollContainer/VBoxContainer/max_concavity"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="max_convex_hulls" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/max_convex_hulls"]
+layout_mode = 2
+text = "max_convex_hulls"
+
+[node name="SpinBox" type="SpinBox" parent="ScrollContainer/VBoxContainer/max_convex_hulls"]
+layout_mode = 2
+min_value = 1.0
+max_value = 10.0
+value = 1.0
+
+[node name="max_num_vertices_per_convex_hull" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/max_num_vertices_per_convex_hull"]
+layout_mode = 2
+text = "max_num_vertices_per_convex_hull"
+
+[node name="SpinBox" type="SpinBox" parent="ScrollContainer/VBoxContainer/max_num_vertices_per_convex_hull"]
+layout_mode = 2
+min_value = 4.0
+max_value = 1024.0
+step = 4.0
+value = 32.0
+
+[node name="max_num_vertices_per_convex_hull2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/max_num_vertices_per_convex_hull2"]
+layout_mode = 2
+text = "min_volume_per_convex_hull"
+
+[node name="SpinBox" type="SpinBox" parent="ScrollContainer/VBoxContainer/max_num_vertices_per_convex_hull2"]
+layout_mode = 2
+max_value = 0.01
+step = 0.01
+value = 0.01
+
+[node name="mode" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/mode"]
+layout_mode = 2
+text = "mode"
+
+[node name="OptionButton" type="OptionButton" parent="ScrollContainer/VBoxContainer/mode"]
+layout_mode = 2
+item_count = 2
+popup/item_0/text = ""
+popup/item_0/id = 0
+popup/item_1/text = ""
+popup/item_1/id = 1

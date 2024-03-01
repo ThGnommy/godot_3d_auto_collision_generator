@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cskb6en7suhat"]
+[gd_scene load_steps=5 format=3 uid="uid://cskb6en7suhat"]
 
 [ext_resource type="Script" path="res://addons/auto_collision_creator/my_dock.gd" id="1_kye4u"]
 [ext_resource type="Script" path="res://addons/auto_collision_creator/directory_tree.gd" id="2_ixkoi"]
 [ext_resource type="PackedScene" uid="uid://djxtpc61uuqks" path="res://addons/auto_collision_creator/MultipleConvexCollisionsSettings.tscn" id="3_pi6qh"]
+[ext_resource type="Script" path="res://addons/auto_collision_creator/multiple_convex_collisions_settings_switch.gd" id="3_ustvv"]
 
 [node name="Auto Collision Creator" type="Control"]
 layout_mode = 3
@@ -61,20 +62,23 @@ size_flags_horizontal = 0
 text = "Single"
 
 [node name="MultipleConvexCollisionsSettingsSwitch" type="CheckButton" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Custom Settings"
+script = ExtResource("3_ustvv")
+
+[node name="MultipleConvexCollisionsSettings" parent="VBoxContainer" instance=ExtResource("3_pi6qh")]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
 
 [node name="CreateAndSave" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Create collision & Save"
 
-[node name="MultipleConvexCollisionsSettings" parent="VBoxContainer" instance=ExtResource("3_pi6qh")]
-layout_mode = 2
-size_flags_vertical = 3
-
 [connection signal="pressed" from="VBoxContainer/RefreshDirectories" to="VBoxContainer/DirectoryTree" method="_on_refresh_directories_pressed"]
 [connection signal="item_selected" from="VBoxContainer/ItemList" to="." method="_on_item_list_item_selected"]
 [connection signal="toggled" from="VBoxContainer/SimplifiedSwitch" to="." method="_on_simplified_checkbox_toggled"]
-[connection signal="toggled" from="VBoxContainer/MultipleConvexCollisionsSettingsSwitch" to="." method="_on_multiple_convex_collisions_settings_switch_toggled"]
+[connection signal="toggled" from="VBoxContainer/MultipleConvexCollisionsSettingsSwitch" to="VBoxContainer/MultipleConvexCollisionsSettingsSwitch" method="_on_toggled"]
 [connection signal="pressed" from="VBoxContainer/CreateAndSave" to="." method="_on_create_and_save_pressed"]

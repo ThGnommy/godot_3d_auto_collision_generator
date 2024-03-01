@@ -1,12 +1,15 @@
+@tool
 extends Control
 
 # docs: https://docs.godotengine.org/en/4.1/classes/class_meshconvexdecompositionsettings.html
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func _ready() -> void:
+	#hide()
+	
+	var meshStruct = MeshConvexDecompositionSettings.new()
+	
+	var class_props = meshStruct.get_property_list()
+	for prop in class_props:
+		var prop_name = prop.name
+		var prop_value = meshStruct.get(prop_name)
+		print("Property:", prop_name, "Value:", prop_value)

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://7gjyxt317q7x"]
+
+[node name="test" type="Node3D"]
+
+[node name="convex" type="Node3D" parent="."]
+
+[node name="convex_semplify" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.52241, 0, 0)

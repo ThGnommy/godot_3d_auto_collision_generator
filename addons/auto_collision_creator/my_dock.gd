@@ -23,7 +23,8 @@ var multiple_convex_collisions_custom_settings: bool = false
 
 func _ready() -> void:
 	$VBoxContainer/ItemList.select(0)
-	$VBoxContainer/SimplifiedCheckbox.text = "Single"
+	$VBoxContainer/SimplifiedSwitch.text = "Single"
+	$VBoxContainer/MultipleConvexCollisionsSettingsSwitch.hide()
 
 func _on_item_list_item_selected(index: int) -> void:
 	if index == 0:
@@ -110,10 +111,10 @@ func _on_create_and_save_pressed() -> void:
 func _on_simplified_checkbox_toggled(button_pressed: bool) -> void:
 	if button_pressed == true:
 		convex_collision_simplified = true
-		$VBoxContainer/SimplifiedCheckbox.text = "Simplified"
+		$VBoxContainer/SimplifiedSwitch.text = "Simplified"
 	else:
 		convex_collision_simplified = false
-		$VBoxContainer/SimplifiedCheckbox.text = "Single"
+		$VBoxContainer/SimplifiedSwitch.text = "Single"
 
 func handle_obj_file_format(node: Node3D) -> void:
 	var parent = node.get_tree().get_edited_scene_root()
@@ -160,7 +161,3 @@ func handle_fbx_file_format(node: Node3D) -> void:
 	# Reset position
 	node.position = Vector3.ZERO
 	save_scene(node, parent)
-
-
-func _on_multiple_convex_collisions_settings_switch_toggled(button_pressed):
-	pass # Replace with function body.

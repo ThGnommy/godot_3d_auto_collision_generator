@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cfp01ppsrxp0u"
+path="res://.godot/imported/SA_Wep_Fireaxe.obj-fb780ad593beeb7fc3eb4461152448ac.mesh"
+
+[deps]
+
+files=["res://.godot/imported/SA_Wep_Fireaxe.obj-fb780ad593beeb7fc3eb4461152448ac.mesh"]
+
+source_file="res://obj/SA_Wep_Fireaxe.obj"
+dest_files=["res://.godot/imported/SA_Wep_Fireaxe.obj-fb780ad593beeb7fc3eb4461152448ac.mesh", "res://.godot/imported/SA_Wep_Fireaxe.obj-fb780ad593beeb7fc3eb4461152448ac.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
